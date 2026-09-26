@@ -1,0 +1,25 @@
+name: Generate sermon draft
+
+on:
+  schedule:
+    # 23:30 UTC and 11:30 UTC = 5:00am and 5:00pm IST
+    - cron: '30 23,11 * * *'
+  workflow_dispatch: {}
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Draft and insert a new sermon
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/generate-sermon.mjs
