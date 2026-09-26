@@ -764,7 +764,8 @@
 
     var conclusionEn = en.conclusion || [], conclusionTe = te.conclusion || [];
     var both = showEn() && showTe();
-    var conclusionHtml = '<section class="conclusionSection"><div class="panelLabel">Conclusion' + (showTe() ? ' <span class="te">· ముగింపు</span>' : '') + '</div>' +
+    var conclusionHtml = (conclusionEn.length || en.charge) ? (
+      '<section class="conclusionSection"><div class="panelLabel">Conclusion' + (showTe() ? ' <span class="te">· ముగింపు</span>' : '') + '</div>' +
       conclusionEn.map(function (c, i) {
         return '<div class="conclRow ' + (both ? "paired" : "") + '">' +
           (showEn() ? '<p class="conclEn">' + richText(c) + '</p>' : '') +
@@ -775,7 +776,8 @@
         (showEn() ? '<p class="chargeEn">' + richText(en.charge) + '</p>' : '') +
         (showTe() ? '<p class="chargeTe">' + richText(te.charge) + '</p>' : '') +
         '</div>' : '') +
-      '</section>';
+      '</section>'
+    ) : "";
 
     var xrefsHtml = en.xrefs.length ? '<section class="xrefsSection"><div class="panelLabel">Read alongside</div>' + refRow(en.xrefs) + '</section>' : "";
 
